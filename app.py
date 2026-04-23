@@ -1,5 +1,5 @@
 import streamlit as st
-import moviepy.editor as mp
+from moviepy.editor import VideoFileClip, concatenate_videoclips
 from pydub import AudioSegment
 from pydub.silence import detect_nonsilent
 import tempfile
@@ -20,7 +20,7 @@ def process_video(input_path, silence_thresh=-40, min_silence_len=500):
     """
     Detecta silencios y recorta el video.
     """
-    video = mp.VideoFileClip(input_path)
+    video = VideoFileClip(input_path)
     audio = video.audio
     
     # Guardar audio temporal para analizar silencios
@@ -40,7 +40,7 @@ def process_video(input_path, silence_thresh=-40, min_silence_len=500):
     for start, end in nonsilent_chunks:
         clips.append(video.subclip(start/1000, end/1000))
     
-    final_video = mp.concatenate_videoclips(clips)
+    final_video = concatenate_videoclips(clips)
     return final_video
 
 # --- INTERFAZ DE USUARIO ---
