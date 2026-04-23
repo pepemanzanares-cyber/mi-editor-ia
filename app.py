@@ -1,3 +1,10 @@
+import sys
+try:
+    import audioop
+except ImportError:
+    import audioop_lts as audioop
+    sys.modules["audioop"] = audioop
+
 import streamlit as st
 from moviepy.editor import VideoFileClip, concatenate_videoclips
 from pydub import AudioSegment
